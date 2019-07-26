@@ -18,7 +18,6 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	g := gin.New()
 	router.Init(g)
-
 	/* 	s := http.Server{
 		Addr:           ":8080",
 		Handler:        g,

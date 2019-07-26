@@ -41,7 +41,7 @@ func init() {
 
 func GetConn() {
 	var err error
-	err = config.LoadFile("./conf/config.yaml")
+	err = config.LoadFile("D:/workspace/GO/mgo/user-srv/conf/config.yaml")
 	if err != nil {
 		log.Fatalf("Could not load config file: %s", err.Error())
 		return

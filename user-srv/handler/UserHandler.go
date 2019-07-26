@@ -2,7 +2,7 @@ package handler
 
 import (
 	"context"
-	"fmt"
+	"mgo/tools/golog"
 	"mgo/user-srv/dao"
 	pb "mgo/user-srv/proto/user"
 )
@@ -29,7 +29,8 @@ func (u *UserHandler) GetUserById(ctx context.Context, req *pb.GetUserByIdReques
 		UserName: user.UserName,
 	}
 
-	fmt.Printf("%v", user)
+	golog.Debugf("%v", user)
+	//fmt.Printf("%v", user)
 	return nil
 
 }

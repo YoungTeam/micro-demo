@@ -1,12 +1,12 @@
 package main
 
 import (
-	"log"
+	"mgo/tools/golog"
+	"mgo/tools/golog/conf"
 	"mgo/user-srv/dao/db"
 	"time"
 
 	"github.com/micro/go-micro"
-
 	"mgo/user-srv/handler"
 	user "mgo/user-srv/proto/user"
 
@@ -14,14 +14,26 @@ import (
 	"github.com/micro/go-micro/registry/consul"
 )
 
-func main() {
+func init() {
+	golog.SetLogger(golog.ZAPLOG,
+		conf.WithLogType(conf.LogJsontype),
+		conf.WithProjectName("go_xxx"),
+		conf.WithFilename("D:/workspace/GO/mgo/user-srv/test.log"),
+	)
 
+	//fmt.Println(conf.DebugLevel)
+	//golog.SetLogLevel(conf.DebugLevel)
+	golog.SetLogLevel(conf.DebugLevel)
+}
+
+func main() {
 	// 修改consul地址，如果是本机，这段代码和后面的那行使用代码都是可以不用的
 	reg := consul.NewRegistry(func(op *registry.Options) {
 		op.Addrs = []string{
 			"10.152.113.166:8500",
 		}
 	})
+
 	service := micro.NewService(
 		micro.Name("go.micro.srv.user"),
 		micro.Version("latest"),
@@ -39,7 +51,8 @@ func main() {
 
 	// Run server
 	if err := service.Run(); err != nil {
-		log.Fatal(err)
+		golog.Fatal("server run error", "err", err)
+		//MainLogger.Fatal("server error", zap.stringerr)
 	}
 
 }
